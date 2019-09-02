@@ -1,6 +1,5 @@
 import * as vscode from 'vscode';
-import { setFlagsFromString } from 'v8';
-
+import { CFHandler } from './cf_handler';
 
 export class RunHandler {
     private _terminal: vscode.Terminal | null;
@@ -8,12 +7,14 @@ export class RunHandler {
     private _file_args: string | undefined;
     // first array elemnt holds python args, second element hold file args
     private _map_args: Map<string, Array<string | undefined>>;
+    private _cfhandler: CFHandler;
 
     constructor() {
         this._terminal = null;
         this._python_args = undefined;
         this._file_args = undefined;
         this._map_args = new Map();
+        this._cfhandler = new CFHandler();
     }
 
     public set_python_args(args: string | undefined) {
@@ -75,28 +76,35 @@ export class RunHandler {
         }
         this._terminal.show();
         this._terminal.sendText(cmd);
+        this._cfhandler.add_proposal(file);
     }
 
     public get_current_python_file() {
-        let actEditor = vscode.window.activeTextEditor;
-        if (actEditor) {
-            let file_path = actEditor.document.fileName;
-            if (file_path) {
-                let file_ext = file_path.split('.').pop();
-                if (file_ext === "py") {
-                    return { file: file_path, valid: true };
+        let file_path = this._cfhandler.get_current_file()
+        // check if current file is valid
+        if (!file_path) {
+            let actEditor = vscode.window.activeTextEditor;
+            if (actEditor) {
+                file_path = actEditor.document.fileName;
+                if (file_path) {
+                    let file_ext = file_path.split('.').pop();
+                    if (file_ext === "py") {
+                        return { file: file_path, valid: true };
+                    } else {
+                        vscode.window.showErrorMessage("File needs to be a python file.");
+                        return { file: file_path, valid: false };
+                    }
                 } else {
-                    vscode.window.showErrorMessage("File needs to be a python file.");
-                    return { file: file_path, valid: false };
+                    vscode.window.showErrorMessage("No file selected.");
+                    return { file: undefined, valid: false };
                 }
             } else {
-                vscode.window.showErrorMessage("No file selected.");
+                // Display a message box to the user
+                vscode.window.showErrorMessage("No active file selected.");
                 return { file: undefined, valid: false };
             }
         } else {
-            // Display a message box to the user
-            vscode.window.showErrorMessage("No active file selected.");
-            return { file: undefined, valid: false };
+            return { file: file_path, valid: true };
         }
     }
 
@@ -110,5 +118,21 @@ export class RunHandler {
             cmd = cmd + " " + String(this._file_args);
         }
         return cmd;
+    }
+
+    public get_status_bar_item(): vscode.StatusBarItem {
+        return this._cfhandler.get_status_bar_item();
+    }
+
+    public get_proposals(): Array<string> {
+        return this._cfhandler.get_proposals();
+    }
+
+    public select_current_file(file: string) {
+        this._cfhandler.set_current_file(file);
+    }
+
+    public remove_file_proposal(file: string) {
+        this._cfhandler.remove_proposal(file);
     }
 }

@@ -11,7 +11,9 @@
 	],
 	"activationEvents": [
 		"onCommand:extension.runPythonFileArgs",
-		"onCommand:extension.runPythonFile"
+		"onCommand:extension.runPythonFile",
+		"onCommand:extension.selectCurrentFile",
+		"onCommand:extension.removeFileProposal"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -23,8 +25,42 @@
 			{
 				"command": "extension.runPythonFile",
 				"title": "PythonRunner: Run Python File"
+			},
+			{
+				"command": "extension.selectCurrentFile",
+				"title": "PythonRunner: Select Current File"
+			},
+			{
+				"command": "extension.removeFileProposal",
+				"title": "PythonRunner: Remove File Proposal"
 			}
-		]
+		],
+		"menus": {
+			"explorer/context": [
+				{
+					"when": "resourceLangId == python",
+					"command": "extension.runPythonFile",
+					"group": "navigation"
+				},
+				{
+					"when": "resourceLangId == python",
+					"command": "extension.runPythonFileArgs",
+					"group": "navigation"
+				}
+			],
+			"editor/context": [
+				{
+					"when": "resourceLangId == python",
+					"command": "extension.runPythonFile",
+					"group": "navigation"
+				},
+				{
+					"when": "resourceLangId == python",
+					"command": "extension.runPythonFileArgs",
+					"group": "navigation"
+				}
+			]
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
