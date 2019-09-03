@@ -6,7 +6,7 @@ export class RunHandler {
     private _python_args: string | undefined;
     private _file_args: string | undefined;
     // first array elemnt holds python args, second element hold file args
-    private _map_args: Map<string, Array<string | undefined>>;
+    private _map_args: Map<string, string | undefined>;
     private _cfhandler: CFHandler;
 
     constructor() {
@@ -25,24 +25,21 @@ export class RunHandler {
         this._file_args = args;
     }
 
-    public run_file_args(python_args: string | undefined, file_args: string | undefined) {
+    public run_file_args() {
         // get active file and check if it is python file
         let { file, valid } = this.get_current_python_file();
 
         if (valid) {
-            this.set_python_args(python_args);
-            this.set_file_args(file_args);
-            this._map_args.set(String(file), [this._python_args, this._file_args]);
+            this._map_args.set(String(file), this._file_args);
 
             this.run(String(file));
 
-            if (!this._python_args && !this._file_args) {
+            if (!this._file_args) {
                 // clear from cached args if all arguments are undefined
                 this._map_args.delete(String(file));
             }
         }
 
-        this._python_args = undefined;
         this._file_args = undefined;
     }
 
@@ -53,18 +50,13 @@ export class RunHandler {
         // if arguments are chached use those
         if (valid && this._map_args.has(String(file))) {
             // restore arguments
-            let args = this._map_args.get(String(file));
-            if (args) {
-                this._file_args = args[1];
-                this._python_args = args[0];
-            }
+            this._file_args = this._map_args.get(String(file));
         }
 
         if (valid) {
             this.run(String(file));
         }
 
-        this._python_args = undefined;
         this._file_args = undefined;
     }
 
@@ -72,7 +64,7 @@ export class RunHandler {
         let cmd = this.create_cmd(String(file));
 
         if (this._terminal === null) {
-            this._terminal = vscode.window.createTerminal("PythonRunner");
+            this._terminal = vscode.window.createTerminal("PyRun");
         }
         this._terminal.show();
         this._terminal.sendText(cmd);
@@ -91,16 +83,16 @@ export class RunHandler {
                     if (file_ext === "py") {
                         return { file: file_path, valid: true };
                     } else {
-                        vscode.window.showErrorMessage("File needs to be a python file.");
+                        vscode.window.showErrorMessage("PyRun: File needs to be a python file.");
                         return { file: file_path, valid: false };
                     }
                 } else {
-                    vscode.window.showErrorMessage("No file selected.");
+                    vscode.window.showErrorMessage("PyRun: No file selected.");
                     return { file: undefined, valid: false };
                 }
             } else {
                 // Display a message box to the user
-                vscode.window.showErrorMessage("No active file selected.");
+                vscode.window.showErrorMessage("PyRun: No active file selected.");
                 return { file: undefined, valid: false };
             }
         } else {
@@ -120,6 +112,9 @@ export class RunHandler {
         return cmd;
     }
 
+    /*
+    * Interface to current file handler
+    */
     public get_status_bar_item(): vscode.StatusBarItem {
         return this._cfhandler.get_status_bar_item();
     }

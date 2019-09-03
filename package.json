@@ -1,6 +1,6 @@
 {
-	"name": "pythonrunner",
-	"displayName": "PythonRunner",
+	"name": "pyrun",
+	"displayName": "PyRun",
 	"description": "",
 	"version": "0.0.1",
 	"engines": {
@@ -10,8 +10,10 @@
 		"Other"
 	],
 	"activationEvents": [
+		"onLanguage:python",
 		"onCommand:extension.runPythonFileArgs",
 		"onCommand:extension.runPythonFile",
+		"onCommand:extension.setPythonArgs",
 		"onCommand:extension.selectCurrentFile",
 		"onCommand:extension.removeFileProposal"
 	],
@@ -20,44 +22,46 @@
 		"commands": [
 			{
 				"command": "extension.runPythonFileArgs",
-				"title": "PythonRunner: Run Python File with Args"
+				"title": "PyRun: Run File with Args"
 			},
 			{
 				"command": "extension.runPythonFile",
-				"title": "PythonRunner: Run Python File"
+				"title": "PyRun: Run File"
+			},
+			{
+				"command": "extension.setPythonArgs",
+				"title": "PyRun: Set Arguments for Python"
 			},
 			{
 				"command": "extension.selectCurrentFile",
-				"title": "PythonRunner: Select Current File"
+				"title": "PyRun: Set Current File"
 			},
 			{
 				"command": "extension.removeFileProposal",
-				"title": "PythonRunner: Remove File Proposal"
+				"title": "PyRun: Remove File Proposal"
 			}
 		],
 		"menus": {
-			"explorer/context": [
-				{
-					"when": "resourceLangId == python",
-					"command": "extension.runPythonFile",
-					"group": "navigation"
-				},
-				{
-					"when": "resourceLangId == python",
-					"command": "extension.runPythonFileArgs",
-					"group": "navigation"
-				}
-			],
 			"editor/context": [
 				{
 					"when": "resourceLangId == python",
 					"command": "extension.runPythonFile",
-					"group": "navigation"
+					"group": "2_workspace"
 				},
 				{
 					"when": "resourceLangId == python",
 					"command": "extension.runPythonFileArgs",
-					"group": "navigation"
+					"group": "2_workspace"
+				},
+				{
+					"when": "resourceLangId == python",
+					"command": "extension.selectCurrentFile",
+					"group": "2_workspace"
+				},
+				{
+					"when": "resourceLangId == python",
+					"command": "extension.removeFileProposal",
+					"group": "2_workspace"
 				}
 			]
 		}

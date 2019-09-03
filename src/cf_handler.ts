@@ -15,7 +15,7 @@ export class CFHandler {
         this._status_bar = vscode.window.createStatusBarItem();
         this._status_bar.command = "extension.selectCurrentFile";
         this._status_bar.tooltip = "Run specified python file.";
-        this.update_status_bar("PythonRun: Current File");
+        this.update_status_bar("PyRun: Current File");
     }
 
     public get_status_bar_item(): vscode.StatusBarItem {
@@ -25,10 +25,10 @@ export class CFHandler {
     public set_current_file(file: string) {
         if (file === "Current File") {
             this._current_file = undefined;
-            this.update_status_bar("PythonRun: Current File");
+            this.update_status_bar("PyRun: Current File");
         } else {
             this._current_file = file;
-            this.update_status_bar("PythonRun: " + path.basename(file));
+            this.update_status_bar("PyRun: " + path.basename(file));
         }
     }
 
@@ -51,7 +51,7 @@ export class CFHandler {
             delete (this._proposals);
             this._proposals = [];
             this._current_file = undefined;
-            this.update_status_bar("PythonRun: Current File");
+            this.update_status_bar("PyRun: Current File");
         } else {
             for (var i = 0; i < this._proposals.length; i++) {
                 if (this._proposals[i] === file) {
@@ -61,7 +61,7 @@ export class CFHandler {
 
             if (this._current_file === file) {
                 this._current_file = undefined;
-                this.update_status_bar("PythonRun: Current File");
+                this.update_status_bar("PyRun: Current File");
             }
         }
     }
