@@ -2,6 +2,8 @@
 	"name": "pyrun",
 	"displayName": "PyRun",
 	"description": "",
+	"publisher": "mibaumgartner",
+	"repository": "https://github.com/mibaumgartner/vscode-PyRun",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.37.0"

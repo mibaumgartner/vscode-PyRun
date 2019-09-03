@@ -1,65 +1,22 @@
-# helloworld README
+# BETA: PyRun
+PyRun is a visual studio code extensions which aims at improving productivity.
+Currently, it serves two main purposes: easily run your python scripts with arguments and choose your execution file(by default the focussed file will be used).
 
-This is the README for your extension "helloworld". After writing up a brief description, we recommend including the following sections.
+The entered arguments are saved for the current file and can be executed in the next run by `PyRun: Run File` . To overwrite the saved arguments, just use `PyRun: Run File with Args` and do not enter any arguments.
 
-## Features
+The bottom menu can be used to select the execution file und displays the currently selected file.
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## Installation
+Installation is currently done by manually downloading and installing the extension. When the beta phase ends and the feedback is good, then extension will published to VS Code MarketPlace. 
 
-For example if there is an image subfolder under your extension project workspace:
+Search for the `pyrun-X.X.X.vsix` file (where X are the current version numbers) and run `code --install-extension pyrun-X.X.X.vsix` from the terminal.
+If your terminal does not recognize the `code` keyword, start vscode and run `Shell Comman: Install 'code' command in PATH` from the command pallet.
 
-\!\[feature X\]\(images/feature-x.png\)
+## Example for running a python file with arguments:
+![Alt Text](./assets/run_args.gif)
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Choose your execution file:
+![Alt Text](./assets/current_file.gif)
 
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+## BETA Note
+This release is still highly experimental and only provides the aforementioned features.
