@@ -9,7 +9,7 @@ The bottom menu can be used to select the execution file und displays the curren
 ## Installation
 Installation is currently done by manually downloading and installing the extension. When the beta phase ends and the feedback is good, then extension will published to VS Code MarketPlace. 
 
-Download the `pyrun-X.X.X.vsix` file (where X are the current version numbers) from https://drive.google.com/drive/folders/104DBLcp9rprn0wqJZyfOxwCgmIdQCpvV?usp=sharing and run `code --install-extension pyrun-X.X.X.vsix` from the terminal.
+Download the `pyrun-X.X.X.vsix` file (where X are the current version numbers) from [Link](https://drive.google.com/drive/folders/104DBLcp9rprn0wqJZyfOxwCgmIdQCpvV?usp=sharing) and run `code --install-extension pyrun-X.X.X.vsix` from the terminal.
 If your terminal does not recognize the `code` keyword, start vscode and run `Shell Comman: Install 'code' command in PATH` from the command pallet.
 
 ## Example for running a python file with arguments:
