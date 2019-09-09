@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { CFHandler } from './cf_handler';
+import { setFlagsFromString } from 'v8';
 
 export class RunHandler {
     private _terminal: vscode.Terminal | null;
@@ -60,16 +61,27 @@ export class RunHandler {
         this._file_args = undefined;
     }
 
-    private run(file: string) {
+    private async run(file: string) {
         let cmd = this.create_cmd(String(file));
 
         if (this._terminal === null) {
-            this._terminal = vscode.window.createTerminal("PyRun");
+            await this.create_new_terminal();
         }
-        this._terminal.show();
-        this._terminal.sendText(cmd);
-        this._cfhandler.add_proposal(file);
+
+        if (this._terminal !== null) {
+            this._terminal.show();
+            this._terminal.sendText(cmd);
+            this._cfhandler.add_proposal(file);
+        }
     }
+
+    private async create_new_terminal() {
+        this._terminal = vscode.window.createTerminal("PyRun");
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        vscode.window.showInformationMessage(`If your python environment 
+            was not activated automatically, please activate it manually.`);
+    }
+
 
     public get_current_python_file() {
         let file_path = this._cfhandler.get_current_file()
